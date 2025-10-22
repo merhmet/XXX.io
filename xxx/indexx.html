@@ -30,6 +30,7 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
+            padding: 15px;
         }
 
         .age-verify.hidden {
@@ -41,8 +42,8 @@
             padding: 30px;
             border-radius: 20px;
             text-align: center;
-            max-width: 90%;
-            width: 400px;
+            max-width: 400px;
+            width: 100%;
             border: 2px solid #ff006e;
         }
 
@@ -117,18 +118,22 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Main Content Grid - AANGEPAST VOOR ONBEPERKTE CARDS */
+        /* 
+         * =============================================
+         * ===== BELANGRIJKSTE AANPASSING: De Grid =====
+         * =============================================
+        */
         .content-grid {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px 15px;
             display: grid;
-            /* Mobiel: altijd 2 kolommen */
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            /* Dit is de magische regel: creëer automatisch kolommen die minimaal
+               150px breed zijn. Dit werkt perfect op alle schermgroottes. */
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
         }
 
-        /* Content Card Styling */
         .content-card {
             display: block;
             text-decoration: none;
@@ -139,6 +144,12 @@
             aspect-ratio: 16 / 10;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .content-card:hover {
@@ -146,7 +157,6 @@
             box-shadow: 0 10px 25px rgba(255,0,110,0.4);
         }
 
-        /* Image styling */
         .content-card img {
             position: absolute;
             top: 0;
@@ -162,18 +172,13 @@
             transform: scale(1.08);
         }
         
-        /* Card info overlay */
         .card-info {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
             padding: 10px 8px 8px;
-            background: linear-gradient(to top, 
-                rgba(0,0,0,0.95) 0%, 
-                rgba(0,0,0,0.7) 40%, 
-                rgba(0,0,0,0.3) 70%,
-                transparent 100%);
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, transparent 100%);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -184,23 +189,7 @@
             color: #fff;
             font-size: 0.8rem;
             font-weight: 600;
-            margin-bottom: 2px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .card-meta {
-            color: rgba(255,255,255,0.9);
-            font-size: 0.65rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-        }
-
-        .card-meta span {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -208,13 +197,13 @@
         
         .premium-badge {
             position: absolute;
-            top: 5px;
-            right: 5px;
+            top: 8px;
+            right: 8px;
             background: linear-gradient(135deg, #ff006e, #ff4458);
             color: white;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 9px;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 10px;
             font-weight: bold;
             z-index: 2;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
@@ -234,122 +223,17 @@
             line-height: 1.6;
         }
 
-        /* Tablet - 3 kolommen */
-        @media (min-width: 600px) {
+        /* Responsive aanpassingen voor grotere schermen */
+        @media (min-width: 768px) {
             .content-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 15px;
-            }
-
-            .card-info {
-                padding: 12px 10px 10px;
-            }
-
-            .card-title {
-                font-size: 0.85rem;
-            }
-
-            .card-meta {
-                font-size: 0.7rem;
-            }
-        }
-
-        /* Desktop klein - 4 kolommen */
-        @media (min-width: 900px) {
-            .content-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 18px;
-                padding: 25px 20px;
-            }
-
-            .card-info {
-                padding: 15px 12px 12px;
-            }
-
-            .card-title {
-                font-size: 0.95rem;
-            }
-
-            .card-meta {
-                font-size: 0.75rem;
-            }
-
-            .premium-badge {
-                top: 8px;
-                right: 8px;
-                padding: 4px 10px;
-                font-size: 10px;
-            }
-        }
-
-        /* Desktop groot - 5 kolommen */
-        @media (min-width: 1200px) {
-            .content-grid {
-                grid-template-columns: repeat(5, 1fr);
+                /* Op tablets en groter worden de kolommen breder */
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
                 gap: 20px;
+                padding: 30px 20px;
             }
-
             .card-title {
                 font-size: 1rem;
             }
-
-            .card-meta {
-                font-size: 0.8rem;
-            }
-        }
-
-        /* Extra groot scherm - 6 kolommen */
-        @media (min-width: 1600px) {
-            .content-grid {
-                grid-template-columns: repeat(6, 1fr);
-                gap: 22px;
-            }
-        }
-
-        /* Touch devices optimization */
-        @media (hover: none) {
-            .content-card:active {
-                transform: scale(0.98);
-            }
-        }
-
-        /* Loading animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .content-card {
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        /* Scroll styling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.1);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #ff006e;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff4458;
         }
     </style>
 </head>
@@ -377,208 +261,306 @@
     <!-- Content Grid -->
     <div class="content-grid">
         
-        <!-- Content Card 1 -->
-        <a href="https://nl.pornhub.com/view_video.php?viewkey=ph5f91f9f0a9324" class="content-card" target="_blank">
+        <!-- Kaart 1 -->
+        <a href="https://nl.pornhub.com/" class="content-card" target="_blank">
             <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
             <span class="premium-badge">+18</span>
             <div class="card-info">
                 <h3 class="card-title">🔥 XXX 1</h3>
-                <div class="card-meta"></div>
             </div>
         </a>
 
-        <!-- Content Card 2 -->
+        <!-- Kaart 2 -->
         <a href="https://urporn.com/" class="content-card" target="_blank">
             <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
             <span class="premium-badge">+18</span>
             <div class="card-info">
                 <h3 class="card-title">🔥 XXX 2</h3>
-                <div class="card-meta"></div>
             </div>
         </a>
 
-        <!-- Content Card 3 -->
+        <!-- Kaart 3 -->
         <a href="https://nl.pornhub.com/popularwithwomen" class="content-card" target="_blank">
             <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
             <span class="premium-badge">+18</span>
             <div class="card-info">
                 <h3 class="card-title">🔥 XXX 3</h3>
-                <div class="card-meta"></div>
             </div>
         </a>
 
-        <!-- Content Card 4 -->
-        <a href="https://www.xnxx.com/video-10nmglc6/fake_taxi_venom_evil_rough_fast_fucking_by_a_huge_cock_in_the_streets_of_prague" class="content-card" target="_blank">
+        <!-- Kaart 4 -->
+          <a href="https://www.xnxx.com/" class="content-card" target="_blank">
             <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
             <span class="premium-badge">+18</span>
             <div class="card-info">
                 <h3 class="card-title">🔥 XXX 4</h3>
-                <div class="card-meta"></div>
             </div>
         </a>
 
-        <!-- Content Card 5 -->
+        <!-- Kaart 5 -->
         <a href="https://www.xnxx.com/best/2023-12" class="content-card" target="_blank">
             <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
             <span class="premium-badge">+18</span>
             <div class="card-info">
                 <h3 class="card-title">🔥 XXX 5</h3>
-                <div class="card-meta"></div>
             </div>
         </a>
 
-        <!-- Content Card 6 -->
+        <!-- Kaart 6 -->
         <a href="https://www.xnxx.com/search/fake+taxi" class="content-card" target="_blank">
             <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
             <span class="premium-badge">+18</span>
             <div class="card-info">
                 <h3 class="card-title">🔥 XXX 6</h3>
-                <div class="card-meta"></div>
             </div>
         </a>
 
-        <!-- Content Card 7 -->
+        <!-- Kaart 7 -->
         <a href="https://nl.pornhub.com/video/search?search=turk+porno" class="content-card" target="_blank">
             <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
             <span class="premium-badge">+18</span>
             <div class="card-info">
                 <h3 class="card-title">🔥 XXX 7</h3>
-                <div class="card-meta"></div>
             </div>
         </a>
 
-        <!-- Content Card 8 -->
+        <!-- Kaart 8 -->
         <a href="https://urporn.com/" class="content-card" target="_blank">
             <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
             <span class="premium-badge">+18</span>
             <div class="card-info">
                 <h3 class="card-title">🔥 XXX 8</h3>
-                <div class="card-meta"></div>
             </div>
         </a>
 
-        <!-- Content Card 9 -->
+        <!-- Kaart 9 -->
         <a href="https://nl.pornhub.com/video/search?search=damla+ozden" class="content-card" target="_blank">
             <img src="https://od.lk/s/OTFfMjk0OTgzOTRf/3.jpeg" alt="Content" loading="lazy">
             <span class="premium-badge">Türk</span>
             <div class="card-info">
-                <h3 class="card-title">Damla Özden</h3>
-                <div class="card-meta"></div>
+                <h3 class="card-title">🔥 Damla Özden </h3>
             </div>
         </a>
 
-        <!-- Content Card 10 -->
+        <!-- Kaart 10 -->
         <a href="https://www.ixxx.com/nl/search/damla%20ozden" class="content-card" target="_blank">
             <img src="https://od.lk/s/OTFfMjk0OTgzOTRf/3.jpeg" alt="Content" loading="lazy">
             <span class="premium-badge">Türk</span>
             <div class="card-info">
-                <h3 class="card-title">Damla Özden 1</h3>
-                <div class="card-meta"></div>
+                <h3 class="card-title">🔥 Damla Özden 1</h3>
             </div>
         </a>
 
-        <!-- Content Card 11 -->
+        <!-- Kaart 11 -->
         <a href="https://www.ixxx.com/nl/search/damla%20ozden" class="content-card" target="_blank">
             <img src="https://od.lk/s/OTFfMjk0OTgzOTRf/3.jpeg" alt="Content" loading="lazy">
             <span class="premium-badge">Türk</span>
             <div class="card-info">
-                <h3 class="card-title">Damla Özden 2</h3>
-                <div class="card-meta"></div>
+                <h3 class="card-title">🔥 Damla Özden 2</h3>
             </div>
         </a>
 
-        <!-- Content Card 12 -->
-        <a href="https://example.com/link12" class="content-card" target="_blank">
+        <!-- Kaart 12 -->
+        <a href="https://www.cambro.tv/search/Damla-ozden/" class="content-card" target="_blank">
             <img src="https://od.lk/s/OTFfMjk0OTgzOTRf/3.jpeg" alt="Content" loading="lazy">
-            <span class="premium-badge">PREMIUM</span>
+            <span class="premium-badge">Türk</span>
             <div class="card-info">
-                <h3 class="card-title">Premium Exclusive</h3>
-                <div class="card-meta"></div>
+                <h3 class="card-title">🔥 Damla Özden 3</h3>
+            </div>
+        </a>
+        
+        <!-- Kaart 13 -->
+        <a href="https://www.ixxx.com/nl/pornstar/sibel-kekilli" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMjk0OTgzOTVf/6.jpg" alt="Content" loading="lazy">
+            <span class="premium-badge">Türk</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 Sibel Kekilli</h3>
             </div>
         </a>
 
-        <!-- Content Card 13 -->
-        <a href="https://example.com/link13" class="content-card" target="_blank">
-            <img src="https://via.placeholder.com/320x180/ff006e/ffffff?text=HD" alt="Content" loading="lazy">
-            <span class="premium-badge">HD</span>
+        <!-- Kaart 14 -->
+        <a href="https://www.xnxx.com/pornstar/sibel-kekilli" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">Türk</span>
             <div class="card-info">
-                <h3 class="card-title">HD Collection</h3>
-                <div class="card-meta"></div>
+                <h3 class="card-title">🔥 Sibel Kekilli 1</h3>
             </div>
         </a>
 
-        <!-- Content Card 14 -->
-        <a href="https://example.com/link14" class="content-card" target="_blank">
-            <img src="https://via.placeholder.com/320x180/ff4458/ffffff?text=NEW" alt="Content" loading="lazy">
-            <span class="premium-badge">NEW</span>
+        <!-- Kaart 15 -->
+        <a href="https://www.youporn.com/" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
             <div class="card-info">
-                <h3 class="card-title">🔥 XXX 14</h3>
-                <div class="card-meta"></div>
+                <h3 class="card-title">YouPorn</h3>
             </div>
         </a>
 
-        <!-- Content Card 15 -->
-        <a href="https://example.com/link15" class="content-card" target="_blank">
-            <img src="https://via.placeholder.com/320x180/ff1493/ffffff?text=VIP" alt="Content" loading="lazy">
-            <span class="premium-badge">VIP</span>
+        <!-- Kaart 16 -->
+        <a href="https://hdabla.net/porno-izlerken-erkek-kardesine-yakalandi-ensest-altyazi/" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">Türk</span>
             <div class="card-info">
-                <h3 class="card-title">🔥 XXX 15</h3>
-                <div class="card-meta"></div>
-            </div>
-        </a>
+                <h3 class="card-title">Hd Abla</h3>
+            </div></a>
 
-        <!-- Content Card 16 -->
-        <a href="https://example.com/link16" class="content-card" target="_blank">
-            <img src="https://via.placeholder.com/320x180/ff69b4/ffffff?text=HOT" alt="Content" loading="lazy">
-            <span class="premium-badge">HOT</span>
+        <!-- Kaart 17 -->
+        <a href="https://xhamster.com/ " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
             <div class="card-info">
-                <h3 class="card-title">🔥 XXX 16</h3>
-                <div class="card-meta"></div>
-            </div>
-        </a>
+                <h3 class="card-title">Xhamster</h3>
+            </div></a>
 
-        <!-- Content Card 17 -->
-        <a href="https://example.com/link17" class="content-card" target="_blank">
-            <img src="https://via.placeholder.com/320x180/dc143c/ffffff?text=LIVE" alt="Content" loading="lazy">
-            <span class="premium-badge">LIVE</span>
+        <!-- Kaart 18 -->
+        <a href="https://bangbros.com/ " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
             <div class="card-info">
-                <h3 class="card-title">🔥 XXX 17</h3>
-                <div class="card-meta"></div>
-            </div>
-        </a>
+                <h3 class="card-title">BangBros</h3>
+            </div></a>
 
-        <!-- Content Card 18 -->
-        <a href="https://example.com/link18" class="content-card" target="_blank">
-            <img src="https://via.placeholder.com/320x180/ff006e/ffffff?text=4K" alt="Content" loading="lazy">
-            <span class="premium-badge">4K</span>
+        <!-- Kaart 19 -->
+        <a href="https://www.redtube.com/?search=fake+taxi+anal " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
             <div class="card-info">
-                <h3 class="card-title">🔥 XXX 18</h3>
-                <div class="card-meta"></div>
-            </div>
-        </a>
+                <h3 class="card-title">RedTube</h3>
+            </div></a>
 
-        <!-- Content Card 19 -->
-        <a href="https://example.com/link19" class="content-card" target="_blank">
-            <img src="https://via.placeholder.com/320x180/ff4458/ffffff?text=TOP" alt="Content" loading="lazy">
-            <span class="premium-badge">TOP</span>
+        <!-- Kaart 20 -->
+        <a href="https://love4porn.com/ " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
             <div class="card-info">
-                <h3 class="card-title">🔥 XXX 19</h3>
-                <div class="card-meta"></div>
-            </div>
-        </a>
+                <h3 class="card-title">Love Porn</h3>
+            </div></a>
 
-        <!-- Content Card 20 -->
-        <a href="https://example.com/link20" class="content-card" target="_blank">
-            <img src="https://via.placeholder.com/320x180/ff1493/ffffff?text=BEST" alt="Content" loading="lazy">
-            <span class="premium-badge">BEST</span>
+        <!-- Kaart 21 -->
+        <a href="https://www.ixxx.com/nl/ " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
             <div class="card-info">
-                <h3 class="card-title">🔥 XXX 20</h3>
-                <div class="card-meta"></div>
-            </div>
-        </a>
+                <h3 class="card-title">I-XXX</h3>
+            </div></a>
 
-        <!-- Je kunt hier eenvoudig meer cards toevoegen -->
-        <!-- Kopieer gewoon het card template en pas de nummers aan -->
+        <!-- Kaart 22 -->
+        <a href="ttps://www.drtuber.com/search/videos/fake+taxi " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">DrTuber</h3>
+            </div></a>
+
+        <!-- Kaart 23 -->
+        <a href="https://xnxxporn.video/ " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">XnXx</h3>
+            </div></a>
+
+        <!-- Kaart 24 -->
+        <a href="https://www.xvideos.com/ " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">XviDeos</h3>
+            </div></a>
+
+        <!-- Kaart 25 -->
+        <a href="https://www.xvideos.com/video20910793/wild_student_sex_friends_party_on_friday_13th " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title"> Party </h3>
+            </div></a>
+
+        <!-- Kaart 26 -->
+        <a href="https://www.xvideos.com/video29925871/foursome_sex_in_public_train " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">Party 1</h3>
+            </div></a>
+
+        <!-- Kaart 27 -->
+        <a href="https://www.ixxx.com/nl/pornstar/alex-black " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">Alex Black</h3>
+            </div></a>
+
+        <!-- Kaart 28 -->
+        <a href="https://sxyprn.net/ " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">Party 2 </h3>
+            </div></a>
+
+        <!-- Kaart 29 -->
+        <a href="https://www.eporner.com/ " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">Party 3 </h3>
+            </div></a>
+
+        <!-- Kaart 30 -->
+        <a href="https://xxxdan.com/ " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">Party 4</h3>
+            </div></a>
+
+        <!-- Kaart 31 -->
+        <a href="https://www.pornhat.com/?ad_sub=339 " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">Party 5</h3>
+            </div></a>
+
+        <!-- Kaart 32 -->
+        <a href="https://jizzbunker.com/ " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">Party 6</h3>
+            </div></a>
+
+        <!-- Kaart 33 -->
+        <a href="https://www.analdin.com/search/Alex-Black/ " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">Party 7</h3>
+            </div></a>
+
+        <!-- Kaart 34 -->
+        <a href="https://tubesafari.com/video?id=RQD2 " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">Party 8</h3>
+            </div></a>
+
+        <!-- Kaart 35 -->
+        <a href="https://tubesafari.com/video?id=xv27295487 " class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">Party 9</h3>
+            </div></a>
+
+ 
+
+
+
+
 
     </div>
 
@@ -599,44 +581,6 @@
         if (localStorage.getItem('ageVerified') === 'true') {
             document.getElementById('ageVerify').classList.add('hidden');
         }
-
-        // Add touch feedback for mobile
-        document.querySelectorAll('.content-card').forEach(card => {
-            card.addEventListener('touchstart', function() {
-                this.style.opacity = '0.9';
-            });
-            
-            card.addEventListener('touchend', function() {
-                setTimeout(() => {
-                    this.style.opacity = '1';
-                }, 100);
-            });
-        });
-
-        // Lazy loading for images
-        if ('IntersectionObserver' in window) {
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.src;
-                        observer.unobserve(img);
-                    }
-                });
-            });
-
-            document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-                imageObserver.observe(img);
-            });
-        }
-
-        // Prevent context menu on images (optional)
-        document.addEventListener('contextmenu', function(e) {
-            if (e.target.tagName === 'IMG') {
-                e.preventDefault();
-                return false;
-            }
-        });
     </script>
 </body>
 </html>
