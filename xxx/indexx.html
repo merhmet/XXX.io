@@ -1,562 +1,642 @@
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500&family=Roboto:wght@300&display=swap" rel="stylesheet" />
-<title>Turis Tv</title>
-<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18+ Premium Content</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!---------------------
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d1b3d 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
 
-Design: Turis Mulayim
-Design name: Turis Mulayim 
-contact number : +32486790423 
-YouTube link for more explanations and codes html
-https://www.youtube.com/c/Androidsh
-We hope that this data will not be deleted
-Good luck to all ♥
+        /* Age Verification Overlay */
+        .age-verify {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
 
----------------------->
+        .age-verify.hidden {
+            display: none;
+        }
 
-<!----------  Channel style codes  ------------>
-<style type="text/css">
-.grid-container {
-display: grid;
-justify-content: center;
-grid-template-columns: repeat(3, 1fr);
-grid-gap: 5px 5px;
-padding: 10px;
-}
-.grid1-container {
-display: grid;
-justify-content: center;
-grid-template-columns: repeat(1, 1fr);
-grid-gap: 10px;
+        .verify-box {
+            background: linear-gradient(135deg, #2d1b3d, #1e1e1e);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 90%;
+            width: 400px;
+            border: 2px solid #ff006e;
+        }
 
-color: white;
-padding: px;
-}
-h1 {
-text-align: center;
-margin-top: 1px;
-font-weight: bold;
-font-family: "Readex Pro", sans-serif;
+        .verify-box h2 {
+            color: #ff006e;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
 
-}
+        .verify-box p {
+            margin-bottom: 20px;
+            color: #ccc;
+            font-size: 14px;
+        }
 
-h2 {
-text-align: center;
-margin-top: 0.5px;
-font-size: 12px;
-color: #8d8daa;
-font-family: "Readex Pro", sans-serif;
-font-weight: bold;
-}
+        .verify-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
-button {
-border-radius: 8px;
-background-image: linear-gradient(to right, #ffffff, #ffffff);
-border-color: #990000;
-padding: 0px;
-margin: 3px;
-height: 130px;
-width: 100px;
-cursor: pointer;
-}
+        .verify-btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
 
-.button {
-text-align: center;
-}
- {
-display: block;
-}
-button:active {
-border: 2px solid #f00;
-}
+        .btn-yes {
+            background: linear-gradient(135deg, #ff006e, #ff4458);
+            color: white;
+        }
 
-</style>
+        .btn-no {
+            background: #333;
+            color: #999;
+        }
 
-<!----------  Comprehensive application style codes  ------------>
-<style type="text/css">
-@import url("https://fonts.googleapis.com/css2?family=Readex+Pro&display=swap");
-body {
-padding: 0;
-margin: 0;
-user-select: none;
-list-style: none;
-background: #ffffff;
-background-size: cover;
-font-weight: 500;
-font-size: 16px;
-text-align: right;
-margin: auto;
-/* position: relative; */
-direction: ltr;
+        .verify-btn:hover {
+            transform: scale(1.05);
+        }
 
-/**  Change the application background **/
-background-image: url(../img/1.jpg);
-/**  Change the application background **/
-}
-h3 {
-text-align: center;
-/* text-align: right; */
-/* padding-right: 65px; */
-/* padding-top: 2px;
-    font-size: medium; */
-font-weight: 200;
-font-family: "Readex Pro", sans-serif;
-}
+        /* Header */
+        header {
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #ff006e;
+        }
 
-header {
-/**  Change the logo background color   **/
-background: rgba(100,0,0,255);
-/**  Change the logo background color   **/
-padding: 2px;
-color: #fff;
-margin-bottom: 10px;
-position: fixed;
-top: 0;
-height: 60px;
-width: 100%;
-box-shadow: 0px 0px 7px black;
-z-index: 1;
-}
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-#i1 {
-position: fixed;
-top: 21px;
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff006e, #ff4458);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-right: 17px;
-font-size: 40px;
-}
-#i2 {
-position: fixed;
-top: 21px;
-left: 14px;
-font-size: 40px;
-}
-#i3 {
-position: fixed;
-top: 16px;
-left: 40px;
-font-size: 40px;
-}
+        /* Main Content Grid - AANGEPAST VOOR ONBEPERKTE CARDS */
+        .content-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 15px;
+            display: grid;
+            /* Mobiel: altijd 2 kolommen */
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
 
-#page:hover {
-background: none;
-}
-#page {
-margin-top: 75px;
-width: 100%;
-}
+        /* Content Card Styling */
+        .content-card {
+            display: block;
+            text-decoration: none;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            aspect-ratio: 16 / 10;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
 
-#page a:hover {
-background: #fff;
-}
-#page a {
-height: 50px;
-padding-top: 2px;
-padding-bottom: 2px;
-margin-bottom: 11px;
-border: 2px solid rgba(188, 17, 21, 255);
-border-radius: 15px;
-width: 91%;
-display: inline-block;
-margin-right: 14px;
-margin-left: 14px;
-background: white;
-}
-#page a img {
-/*height:50px;
-margin-right:10px;
-width:50px;
-padding-bottom:4px;
-*/
-height: 50px;
-margin-right: 10px;
-width: 50px;
-padding-bottom: 4px;
-}
-#page a p {
-text-align: center;
-font-family: "Readex Pro", sans-serif;
-/* position: absolute; */
-/* margin-right: 20px; */
-/* margin-top: -40px; */
-display: inline-block;
-font-weight: 550;
-color: rgba(188, 17, 21, 255);
-}
-</style>
+        .content-card:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(255,0,110,0.4);
+        }
 
-<!----------  Menu style codes  ------------>
-<style>
-.sidenav {
-height: 100%;
-width: 0;
-position: fixed;
-z-index: 1;
-top: 0;
-right: 0;
-/**  Change menu color **/
-background-color: #6f0100;
-/**  Change menu color **/
+        /* Image styling */
+        .content-card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center center;
+            transition: transform 0.3s ease;
+        }
 
-overflow-x: hidden;
-transition: 0.5s;
-padding-top: 60px;
-}
+        .content-card:hover img {
+            transform: scale(1.08);
+        }
+        
+        /* Card info overlay */
+        .card-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 8px 8px;
+            background: linear-gradient(to top, 
+                rgba(0,0,0,0.95) 0%, 
+                rgba(0,0,0,0.7) 40%, 
+                rgba(0,0,0,0.3) 70%,
+                transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            z-index: 1;
+        }
 
-.sidenav a {
-padding: 8px 8px 8px 32px;
-text-decoration: none;
-font-size: 15px;
-color: #fff;
-display: block;
-transition: 0.3s;
-text-align: center;
-font-family: "Readex Pro", sans-serif;
-}
+        .card-title {
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
-.sidenav a:hover {
-color: #d9c9c9;
-}
+        .card-meta {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.65rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
 
-.sidenav .closebtn {
-position: absolute;
-top: 5px;
-right: 0;
-font-size: 15px;
-margin-left: 0px;
-}
+        .card-meta span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .premium-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: linear-gradient(135deg, #ff006e, #ff4458);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 9px;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
 
-@media screen and (max-height: 450px) {
-.sidenav {
-padding-top: 15px;
-}
-.sidenav a {
-font-size: 18px;
-}
-}
+        /* Footer */
+        footer {
+            background: rgba(0,0,0,0.8);
+            padding: 20px 15px;
+            text-align: center;
+            margin-top: 40px;
+            border-top: 2px solid #ff006e;
+        }
 
-/* .Remove the scroll bar at the bottom of the blog*/
-html {
-overflow-x: hidden;
-}
+        footer p {
+            font-size: 12px;
+            line-height: 1.6;
+        }
 
-/* Remove changing the shape of the scroll bar Scroll.Bar */
-::-webkit-scrollbar {
-width: 7px;
-}
-::-webkit-scrollbar-thumb {
--webkit-shadow: inset 0 0 0 #000;
--webkit-border-radius: 0;
-background-image: -webkit-linear-gradient(top, #bc1115 100%, #000 100%);
-}
-::-webkit-scrollbar-track {
--webkit-shadow: inset 0 0 0 #000;
--webkit-border-radius: 100px;
-}
-</style>
+        /* Tablet - 3 kolommen */
+        @media (min-width: 600px) {
+            .content-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+
+            .card-info {
+                padding: 12px 10px 10px;
+            }
+
+            .card-title {
+                font-size: 0.85rem;
+            }
+
+            .card-meta {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Desktop klein - 4 kolommen */
+        @media (min-width: 900px) {
+            .content-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 18px;
+                padding: 25px 20px;
+            }
+
+            .card-info {
+                padding: 15px 12px 12px;
+            }
+
+            .card-title {
+                font-size: 0.95rem;
+            }
+
+            .card-meta {
+                font-size: 0.75rem;
+            }
+
+            .premium-badge {
+                top: 8px;
+                right: 8px;
+                padding: 4px 10px;
+                font-size: 10px;
+            }
+        }
+
+        /* Desktop groot - 5 kolommen */
+        @media (min-width: 1200px) {
+            .content-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 20px;
+            }
+
+            .card-title {
+                font-size: 1rem;
+            }
+
+            .card-meta {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Extra groot scherm - 6 kolommen */
+        @media (min-width: 1600px) {
+            .content-grid {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 22px;
+            }
+        }
+
+        /* Touch devices optimization */
+        @media (hover: none) {
+            .content-card:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* Loading animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-card {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Scroll styling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #ff006e;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff4458;
+        }
+    </style>
 </head>
-<body dir="rtl">
-<header>
-<!--- Back page link --->
-<a href=" indexx.html"><i id="i2" class="fa fa-arrow-left" style="font-size: 20px; color: #fff; margin-top: 2px;"></i></a>
-
-<!--- Department Name --->
-<center><h3> Turis Tv</h3></center>
-
-<!--- the list --->
-<div id="mySidenav" class="sidenav">
-<!--- logo --->
-<div class="col-md-9">
-<img src="https://od.lk/s/OTFfMjkwNzc0NThf/turistv.jpg" style="width: 180px; height: `; /* margin: 15px; */ padding: 10px; margin-top: -34px; margin-right: 15px;" />
-</div>
-
-<!---  List sections -->
-<a href="https://play.google.com/store/apps/details?id=co.wuffy.player&hl=en&referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dwuffy+player&pcampaignid=APPU_1_5_5tXqD2JIaNlwTF1LqwDg"> <i class="fa fa-share"></i> ⬇ꜜ⬇ꜜ⬇ INDIR </a>
-<a href="AnaMenu/Turis-Tv.html"> <i class="fa fa-bolt"></i>   Turis Tv  Radyo  </a>
-<a href="Link"> <i class="fa fa-envelope"></i> Turis Tv </a>
-<!--- The lock code is forbidden to be deleted --->
-<a href="javascript:void(0)" onclick="closeNav()">  🔐 X Kapat Menu  </a>
-</div>
-<span style="font-size: 30px; cursor: pointer;" onclick="openNav()">
-<i id="i1" class="fa fa-bars" style="font-size: 20px; color: #fff;"></i>
-</span>
-</header>
-<div id="page">
-<div class="grid1-container">
-<div align="center" class="button">
-<div id="buttons-list">
-<!--- Application sections --->
-
-
-
-
-
-
-
-
-
-
-<button onclick="window.open('https://nl.pornhub.com/view_video.php?viewkey=ph5f91f9f0a9324')">
-<img src="../img/2.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx</h2>
-</button>
-
-
-
-<button onclick="window.open('https://urporn.com/')">
-<img src="../img/2.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2> xxx 0</h2>
-</button>
-
-
-<button onclick="window.open('https://nl.pornhub.com/popularwithwomen')">
-<img src="../img/2.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2> xxx 1</h2>
-</button>
-
-<button onclick="window.open('https://www.xnxx.com/video-10nmglc6/fake_taxi_venom_evil_rough_fast_fucking_by_a_huge_cock_in_the_streets_of_prague')">
-<img src="../img/2.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx 2</h2>
-</button>
-
-<button onclick="window.open('https://www.xnxx.com/best/2023-12')">
-<img src="../img/2.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx 3</h2>
-</button>
-
-<button onclick="window.open('https://www.xnxx.com/search/fake+taxi')">
-<img src="../img/2.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx 4</h2>
-</button>
-
-<button onclick="window.open('https://nl.pornhub.com/video/search?search=turk+porno')">
-<img src="../img/2.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx 5</h2>
-</button>
-
-<button onclick="window.open('https://urporn.com/')">
-<img src="../img/2.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx 0</h2>
-</button>
-
-
-
-
-<button onclick="window.open('https://nl.pornhub.com/video/search?search=damla+ozden')">
-<img src="../img/3.jpeg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>Damla Ozden</h2>
-</button>
-
-
-<button onclick="window.open('https://www.ixxx.com/nl/search/damla%20ozden')">
-<img src="../img/3.jpeg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>Damla Ozden 1</h2>
-</button>
-
-
-
-<button onclick="window.open('https://www.cambro.tv/search/Damla-ozden/')">
-<img src="../img/6.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>Damla Ozden 1</h2>
-</button>
-
-
-<button onclick="window.open('https://www.ixxx.com/nl/pornstar/sibel-kekilli')">
-<img src="../img/6.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>Sibel Kekilli</h2>
-</button>
-
-<button onclick="window.open('https://www.xnxx.com/pornstar/sibel-kekilli')">
-<img src="../img/6.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>Sibel Kekilli 1</h2>
-</button>
-
-
-<button onclick="window.open('https://www.youporn.com/')">
-<img src="../img/youporn.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>YouPorn</h2>
-</button>
-
-
-
-
-
-<button onclick="window.open('https://mulayimturis.000webhostapp.com/')">
-<img src="../img/1.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>ŞİFRELİ KAPI</h2>
-</button>
-
-
-<button onclick="window.open('https://www.pornonacionais.com/')">
-<img src="../img/1.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Git 1</h2>
-</button>
-
-
-
-<button onclick="window.open('index1.html')">
-<img src="../img/1.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Git</h2>
-</button>
-
-<button onclick="window.open('https://hdabla.net/porno-izlerken-erkek-kardesine-yakalandi-ensest-altyazi/')">
-<img src="../img/hdabla.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Hd Abla</h2>
-</button>
-
-<button onclick="window.open('https://xhamster.com/')">
-<img src="../img/xhamster.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Xhamster</h2>
-</button>
-
-
-<button onclick="window.open('https://bangbros.com/')">
-<img src="../img/bangbros.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx BangBros</h2>
-</button>
-
-
-<button onclick="window.open('https://www.redtube.com/?search=fake+taxi+anal')">
-<img src="../img/Redtube.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx RedTube</h2>
-</button>
-
-
-<button onclick="window.open('https://love4porn.com/')">
-<img src="../img/LovePorn.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx LovePorn</h2>
-</button>
-
-<button onclick="window.open('https://www.ixxx.com/nl/')">
-<img src="../img/IXXX.png" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Ixxx</h2>
-</button>
-
-
-<button onclick="window.open('https://www.drtuber.com/search/videos/fake+taxi')">
-<img src="../img/DrTuber.jpeg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx DrTuber</h2>
-</button>
-
-<button onclick="window.open('xxx-m3u.html')">
-<img src="../img/+18.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx M3u</h2>
-</button>
-
-<button onclick="window.open('https://xnxxporn.video/')">
-<img src="../img/xnxx.jpeg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx XnXx</h2>
-</button>
-
-
-<button onclick="window.open('https://www.xvideos.com/')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx XviDeos</h2>
-</button>
-
-<button onclick="window.open('https://www.xvideos.com/video20910793/wild_student_sex_friends_party_on_friday_13th')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Party </h2>
-</button>
-
-
-<button onclick="window.open('https://www.xvideos.com/video29925871/foursome_sex_in_public_train')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Party 1 </h2>
-</button>
-
-
-<button onclick="window.open('https://www.ixxx.com/nl/pornstar/alex-black')">
-<img src="../img/alex-black.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Alex Black</h2>
-</button>
-
-
-<button onclick="window.open('https://sxyprn.net/')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Party 2 </h2>
-</button>
-
-
-<button onclick="window.open('https://www.eporner.com/')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Party 3 </h2>
-</button>
-
-
-<button onclick="window.open('https://xxxdan.com/')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Party 4 </h2>
-</button>
-
-
-<button onclick="window.open('https://www.pornhat.com/?ad_sub=339')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Party 5 </h2>
-</button>
-
-<button onclick="window.open('https://jizzbunker.com/')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Party 6 </h2>
-</button>
-
-
-<button onclick="window.open('https://www.analdin.com/search/Alex-Black/')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Party 7 </h2>
-</button>
-
-
-<button onclick="window.open('https://tubesafari.com/video?id=RQD2')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Party 8 </h2>
-</button>
-
-<button onclick="window.open('https://tubesafari.com/video?id=xv27295487')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Party 9 </h2>
-</button>
-
-
-<button onclick="window.open('https://xmilf.com/')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Party 10 </h2>
-</button>
-
-
-
-<button onclick="window.open('index.html')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Turis</h2>
-</button>
-
-<button onclick="window.open('Turisxxx.html')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Turis 2</h2>
-</button>
-
-<button onclick="window.open('xxx-m3u.html')">
-<img src="../img/xvideos.jpg" style="border-radius: 8px;" height="80px" width="80px" vspace="5px" />
-<h2>xxx Turis 3</h2>
-</button>
-
-
-</div>
-
-<script>
-function openNav() {
-document.getElementById("mySidenav").style.width = "250px";
-}
-
-function closeNav() {
-document.getElementById("mySidenav").style.width = "0";
-}
-</script>
-</div>
-</div>
-</div>
-</header>
+<body>
+    <!-- Age Verification -->
+    <div class="age-verify" id="ageVerify">
+        <div class="verify-box">
+            <h2>⚠️ 18+ Content</h2>
+            <p>Deze website bevat inhoud voor volwassenen. U moet 18 jaar of ouder zijn om door te gaan.</p>
+            <p><strong>Bent u 18 jaar of ouder?</strong></p>
+            <div class="verify-buttons">
+                <button class="verify-btn btn-yes" onclick="verifyAge()">Ja, ik ben 18+</button>
+                <button class="verify-btn btn-no" onclick="window.location.href='https://www.google.com'">Nee</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">💋 Premium Adult</div>
+        </div>
+    </header>
+
+    <!-- Content Grid -->
+    <div class="content-grid">
+        
+        <!-- Content Card 1 -->
+        <a href="https://nl.pornhub.com/view_video.php?viewkey=ph5f91f9f0a9324" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 1</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 2 -->
+        <a href="https://urporn.com/" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 2</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 3 -->
+        <a href="https://nl.pornhub.com/popularwithwomen" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 3</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 4 -->
+        <a href="https://www.xnxx.com/video-10nmglc6/fake_taxi_venom_evil_rough_fast_fucking_by_a_huge_cock_in_the_streets_of_prague" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 4</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 5 -->
+        <a href="https://www.xnxx.com/best/2023-12" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 5</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 6 -->
+        <a href="https://www.xnxx.com/search/fake+taxi" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 6</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 7 -->
+        <a href="https://nl.pornhub.com/video/search?search=turk+porno" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 7</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 8 -->
+        <a href="https://urporn.com/" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMzE0ODkzMTRf/2.png" alt="Content" loading="lazy">
+            <span class="premium-badge">+18</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 8</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 9 -->
+        <a href="https://nl.pornhub.com/video/search?search=damla+ozden" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMjk0OTgzOTRf/3.jpeg" alt="Content" loading="lazy">
+            <span class="premium-badge">Türk</span>
+            <div class="card-info">
+                <h3 class="card-title">Damla Özden</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 10 -->
+        <a href="https://www.ixxx.com/nl/search/damla%20ozden" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMjk0OTgzOTRf/3.jpeg" alt="Content" loading="lazy">
+            <span class="premium-badge">Türk</span>
+            <div class="card-info">
+                <h3 class="card-title">Damla Özden 1</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 11 -->
+        <a href="https://www.ixxx.com/nl/search/damla%20ozden" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMjk0OTgzOTRf/3.jpeg" alt="Content" loading="lazy">
+            <span class="premium-badge">Türk</span>
+            <div class="card-info">
+                <h3 class="card-title">Damla Özden 2</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 12 -->
+        <a href="https://example.com/link12" class="content-card" target="_blank">
+            <img src="https://od.lk/s/OTFfMjk0OTgzOTRf/3.jpeg" alt="Content" loading="lazy">
+            <span class="premium-badge">PREMIUM</span>
+            <div class="card-info">
+                <h3 class="card-title">Premium Exclusive</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 13 -->
+        <a href="https://example.com/link13" class="content-card" target="_blank">
+            <img src="https://via.placeholder.com/320x180/ff006e/ffffff?text=HD" alt="Content" loading="lazy">
+            <span class="premium-badge">HD</span>
+            <div class="card-info">
+                <h3 class="card-title">HD Collection</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 14 -->
+        <a href="https://example.com/link14" class="content-card" target="_blank">
+            <img src="https://via.placeholder.com/320x180/ff4458/ffffff?text=NEW" alt="Content" loading="lazy">
+            <span class="premium-badge">NEW</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 14</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 15 -->
+        <a href="https://example.com/link15" class="content-card" target="_blank">
+            <img src="https://via.placeholder.com/320x180/ff1493/ffffff?text=VIP" alt="Content" loading="lazy">
+            <span class="premium-badge">VIP</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 15</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 16 -->
+        <a href="https://example.com/link16" class="content-card" target="_blank">
+            <img src="https://via.placeholder.com/320x180/ff69b4/ffffff?text=HOT" alt="Content" loading="lazy">
+            <span class="premium-badge">HOT</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 16</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 17 -->
+        <a href="https://example.com/link17" class="content-card" target="_blank">
+            <img src="https://via.placeholder.com/320x180/dc143c/ffffff?text=LIVE" alt="Content" loading="lazy">
+            <span class="premium-badge">LIVE</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 17</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 18 -->
+        <a href="https://example.com/link18" class="content-card" target="_blank">
+            <img src="https://via.placeholder.com/320x180/ff006e/ffffff?text=4K" alt="Content" loading="lazy">
+            <span class="premium-badge">4K</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 18</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 19 -->
+        <a href="https://example.com/link19" class="content-card" target="_blank">
+            <img src="https://via.placeholder.com/320x180/ff4458/ffffff?text=TOP" alt="Content" loading="lazy">
+            <span class="premium-badge">TOP</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 19</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Content Card 20 -->
+        <a href="https://example.com/link20" class="content-card" target="_blank">
+            <img src="https://via.placeholder.com/320x180/ff1493/ffffff?text=BEST" alt="Content" loading="lazy">
+            <span class="premium-badge">BEST</span>
+            <div class="card-info">
+                <h3 class="card-title">🔥 XXX 20</h3>
+                <div class="card-meta"></div>
+            </div>
+        </a>
+
+        <!-- Je kunt hier eenvoudig meer cards toevoegen -->
+        <!-- Kopieer gewoon het card template en pas de nummers aan -->
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Premium Adult Content | 18+ Only | All Rights Reserved By Turis Tv</p>
+        <p style="margin-top: 10px; color: #999;">This website contains adult content</p>
+    </footer>
+
+    <script>
+        // Age verification
+        function verifyAge() {
+            document.getElementById('ageVerify').classList.add('hidden');
+            localStorage.setItem('ageVerified', 'true');
+        }
+
+        // Check if already verified
+        if (localStorage.getItem('ageVerified') === 'true') {
+            document.getElementById('ageVerify').classList.add('hidden');
+        }
+
+        // Add touch feedback for mobile
+        document.querySelectorAll('.content-card').forEach(card => {
+            card.addEventListener('touchstart', function() {
+                this.style.opacity = '0.9';
+            });
+            
+            card.addEventListener('touchend', function() {
+                setTimeout(() => {
+                    this.style.opacity = '1';
+                }, 100);
+            });
+        });
+
+        // Lazy loading for images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.src;
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // Prevent context menu on images (optional)
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
 </body>
+</html>
